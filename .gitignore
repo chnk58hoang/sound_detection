@@ -1,0 +1,13 @@
+background
+concated_fg
+concated_bg
+exp
+fore_ground
+mixture_train
+mixture_valid
+mixture_test
+*.zip
+__pycache__
+.idea
+*.wav
+*.csv
