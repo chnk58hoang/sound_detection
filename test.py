@@ -1,17 +1,11 @@
-from data_utils.hrs_dataset import HSRDataset
-from torch.utils.data import DataLoader
+from asteroid.models import SuDORMRFImprovedNet
+import torch
+import yaml
 
-
-train_dataset = HSRDataset(file_list_path='train.csv',
-                           mixture_file_dir='mixture_train',
-                           source_file_dir='concated_fg/machine',
-                           bg_file_dir='concated_bg/env',
-                           return_bg=True)
-
-train_loader = DataLoader(train_dataset, batch_size=4,
-                          shuffle=True, num_workers=4,
-                          drop_last=True)
-
-for i, data in enumerate(train_loader):
-    mix, source, bg = data
-    print(mix.shape, source.shape, bg.shape)
+conf = yaml.safe_load(open('conf.yml'))
+print(type(conf['filterbank']))
+state_dict = torch.load('epoch=1-step=4900.ckpt', map_location='cpu')
+state_dict['model_name'] = 'cc'
+conf['filterbank'].update(conf['masknet'])
+state_dict['model_args'] = conf['filterbank']
+model = SuDORMRFImprovedNet.from_pretrained(state_dict)
