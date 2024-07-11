@@ -21,6 +21,7 @@ class HSRDataset(Dataset):
             file_list_path (_type_): path to the csv file
             return_bg (bool, optional)
         """
+        self.dataset_name = 'hsrdataset'
         self.mixture_file_dir = mixture_file_dir
         self.source_file_dir = source_file_dir
         self.bg_file_dir = bg_file_dir
